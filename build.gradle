@@ -1,7 +1,16 @@
+buildscript {
+    ext {
+        springBootVersion = "2.7.6"
+        springDependencyManagementVersion = "1.0.15.RELEASE"
+        swaggerGeneratorPluginVersion = "2.19.2"
+        swaggerCodegenVersion = "3.0.36"
+    }
+}
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.7.6'
-    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'org.springframework.boot' version "$springBootVersion"
+    id 'io.spring.dependency-management' version "$springDependencyManagementVersion"
+    id 'org.hidetake.swagger.generator' version "$swaggerGeneratorPluginVersion"
 }
 
 group = 'kv.polyanskiy'
@@ -29,7 +38,23 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    swaggerCodegen "io.swagger.codegen.v3:swagger-codegen-cli:$swaggerCodegenVersion"
 }
+
+swaggerSources {
+    realworld {
+        inputFile = file("src/main/resources/static/api/swagger/realworld-api.yaml")
+        code {
+            language = 'spring'
+            configFile = file("src/main/resources/static/api/swagger/swagger-build-config.json")
+            outputDir = file('build/generated/swagger-plugin')
+            components = ['models', 'apis']
+        }
+    }
+}
+
+// add auto generation
+compileJava.dependsOn swaggerSources.realworld.code
 
 tasks.named('test') {
     useJUnitPlatform()
