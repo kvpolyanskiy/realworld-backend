@@ -2,15 +2,17 @@ buildscript {
     ext {
         springBootVersion = "2.7.6"
         springDependencyManagementVersion = "1.0.15.RELEASE"
-        swaggerGeneratorPluginVersion = "2.19.2"
-        swaggerCodegenVersion = "3.0.36"
+        swaggerParserVersion = "2.1.9"
+        openApiGeneratorVersion = "6.2.1"
+        mapStructVersion = "1.5.3.Final"
     }
 }
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version "$springBootVersion"
     id 'io.spring.dependency-management' version "$springDependencyManagementVersion"
-    id 'org.hidetake.swagger.generator' version "$swaggerGeneratorPluginVersion"
+    id "org.openapi.generator" version "$openApiGeneratorVersion"
 }
 
 group = 'kv.polyanskiy'
@@ -32,30 +34,33 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.liquibase:liquibase-core'
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
+    implementation group: "io.swagger.parser.v3", name: "swagger-parser", version: "${swaggerParserVersion}"
+    implementation "org.mapstruct:mapstruct:${mapStructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapStructVersion}"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    swaggerCodegen "io.swagger.codegen.v3:swagger-codegen-cli:$swaggerCodegenVersion"
 }
 
-swaggerSources {
-    realworld {
-        inputFile = file("src/main/resources/static/api/swagger/realworld-api.yaml")
-        code {
-            language = 'spring'
-            configFile = file("src/main/resources/static/api/swagger/swagger-build-config.json")
-            outputDir = file('build/generated/swagger-plugin')
-            components = ['models', 'apis']
-        }
-    }
+openApiGenerate {
+    generatorName = "spring"
+    inputSpec = "$rootDir/src/main/resources/static/api/swagger/realworld-api.yaml"
+    outputDir = "$buildDir/generated/swagger-plugin"
+    configFile = "$rootDir/src/main/resources/static/api/swagger/open-api-generator-config.json"
+    globalProperties = [
+            apis: "",
+            models: ""
+    ]
 }
 
-// add auto generation
-compileJava.dependsOn swaggerSources.realworld.code
+compileJava.dependsOn tasks.openApiGenerate
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+sourceSets.main.java.srcDirs += "$buildDir/generated/swagger-plugin"

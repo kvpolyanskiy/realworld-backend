@@ -29,11 +29,11 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/LoginUserRequest'
       responses:
-        '200':
+        200:
           $ref: '#/components/responses/UserResponse'
-        '401':
+        401:
           $ref: '#/components/responses/Unauthorized'
-        '422':
+        422:
           $ref: '#/components/responses/GenericError'
       x-codegen-request-body-name: body
   /users:

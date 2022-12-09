@@ -1,10 +1,10 @@
 {
   "modelPackage": "kv.polyanskiy.realworld.dto.model",
   "apiPackage": "kv.polyanskiy.realworld.api",
-  "invokerPackage": "example",
-  "library": "spring-mvc",
-  "dateLibrary": "java11",
+  "library": "spring-boot",
   "interfaceOnly": true,
   "serializableModel": true,
-  "hideGenerationTimestamp": true
+  "hideGenerationTimestamp": true,
+  "skipDefaultInterface": true,
+  "openApiNullable": false
 }

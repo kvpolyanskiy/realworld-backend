@@ -9,3 +9,6 @@ spring:
       ddl-auto: none
   liquibase:
     change-log: classpath:db/changelog/changelog-root.yml
+  security:
+    enabled: true
+    secret-key: ${SECRET_KEY:secret}
