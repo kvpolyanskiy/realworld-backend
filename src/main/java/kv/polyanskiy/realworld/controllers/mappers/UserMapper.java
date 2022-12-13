@@ -10,4 +10,6 @@ public interface UserMapper {
   kv.polyanskiy.realworld.dto.model.User userToUserDto(User user);
 
   User newUserDtoToUser(kv.polyanskiy.realworld.dto.model.NewUser userDto);
+
+  User updateUserDtoToUser(kv.polyanskiy.realworld.dto.model.UpdateUser userDto);
 }

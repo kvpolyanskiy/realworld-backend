@@ -26,4 +26,13 @@ public class User {
 
   @Column(name = "email")
   private String email;
+
+  @Column(name = "bio")
+  private String bio;
+
+  @Column(name = "image")
+  private String image;
+
+  @Column(name = "following")
+  private String following;
 }

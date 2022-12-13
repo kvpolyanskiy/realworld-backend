@@ -5,6 +5,7 @@ buildscript {
         swaggerParserVersion = "2.1.9"
         openApiGeneratorVersion = "6.2.1"
         mapStructVersion = "1.5.3.Final"
+        jsonwebtokenVersion = "0.9.1"
     }
 }
 
@@ -34,7 +35,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.liquibase:liquibase-core'
-    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+    implementation group: "io.jsonwebtoken", name: "jjwt", version: "${jsonwebtokenVersion}"
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'
