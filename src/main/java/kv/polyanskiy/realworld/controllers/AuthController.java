@@ -8,6 +8,7 @@ import kv.polyanskiy.realworld.dto.model.CreateUserRequest;
 import kv.polyanskiy.realworld.dto.model.Login200Response;
 import kv.polyanskiy.realworld.dto.model.LoginRequest;
 import kv.polyanskiy.realworld.services.UserService;
+import kv.polyanskiy.realworld.validation.EntityValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,9 +36,14 @@ public class AuthController implements UsersApi {
 
   private final PasswordEncoder passwordEncoder;
 
+  private final EntityValidator entityValidator;
+
   @Override
   public ResponseEntity<Login200Response> createUser(CreateUserRequest body) {
     final var newUser = userMapper.newUserDtoToUser(body.getUser());
+
+    entityValidator.validate(newUser);
+
     newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
     final var user = usersService.createUser(newUser);

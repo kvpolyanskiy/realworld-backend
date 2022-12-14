@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 import lombok.Data;
 
 @Entity
@@ -19,12 +21,15 @@ public class User {
   private Integer id;
 
   @Column(name = "username")
+  @Size(min = 3, message = "Name has to contain minimum 3 characters")
   private String username;
 
   @Column(name = "password")
+  @Size(min = 8, message = "The password length should be minimum 8 characters")
   private String password;
 
   @Column(name = "email")
+  @Email(message = "Invalid email")
   private String email;
 
   @Column(name = "bio")
