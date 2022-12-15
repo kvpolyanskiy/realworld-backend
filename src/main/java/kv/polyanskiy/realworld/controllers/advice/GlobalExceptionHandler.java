@@ -29,4 +29,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
   }
+
+  @ExceptionHandler(value = {UserNotFoundException.class})
+  protected ResponseEntity<GenericErrorModel> handleUserNotFound(UserNotFoundException ex) {
+    final var errors = new GenericErrorModelErrors();
+    final var errorResponse = new GenericErrorModel();
+
+    errorResponse.setErrors(errors);
+    errors.addBodyItem(ex.getMessage());
+
+    return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+  }
 }

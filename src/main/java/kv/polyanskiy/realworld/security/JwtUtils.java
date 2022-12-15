@@ -62,6 +62,10 @@ public class JwtUtils {
   }
 
   public String getTokenSubject(String token) {
+    if (token == null || token.isEmpty()) {
+      return "";
+    }
+
     return extractUsername(getTokenFromAuthorizationHeader(token));
   }
 }

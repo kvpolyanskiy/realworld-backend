@@ -1,7 +1,7 @@
 package kv.polyanskiy.realworld.services;
 
 import kv.polyanskiy.realworld.domain.UserCredentials;
-import kv.polyanskiy.realworld.repositories.UsersRepository;
+import kv.polyanskiy.realworld.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserCredentialService implements UserDetailsService {
 
-  private final UsersRepository usersRepository;
+  private final UserRepository usersRepository;
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

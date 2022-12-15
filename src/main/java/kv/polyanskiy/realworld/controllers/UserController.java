@@ -28,8 +28,7 @@ public class UserController implements UserApi {
 
   @Override
   public ResponseEntity<Login200Response> getCurrentUser() {
-    final String userEmail = jwtUtils.getTokenSubject(httpServletRequest.getHeader(AUTHORIZATION));
-    final User user = userService.findUserByEmail(userEmail);
+    final User user = userService.getCurrentUser();
 
     final var response = new Login200Response();
     response.setUser(userMapper.userToUserDto(user));

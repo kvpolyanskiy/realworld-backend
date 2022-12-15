@@ -4,6 +4,19 @@ CREATE TABLE users (
     password VARCHAR NOT NULL,
     email VARCHAR NOT NULL UNIQUE,
     bio VARCHAR,
-    image VARCHAR,
-    following VARCHAR
+    image VARCHAR
+);
+
+CREATE TABLE following (
+    user_id INT,
+    following_username VARCHAR,
+    PRIMARY KEY(user_id, following_username),
+    CONSTRAINT fk_user_id
+        FOREIGN KEY(user_id)
+            REFERENCES users(id)
+            ON DELETE CASCADE,
+    CONSTRAINT fk_following_username
+        FOREIGN KEY(following_username)
+            REFERENCES users(username)
+            ON DELETE CASCADE
 );

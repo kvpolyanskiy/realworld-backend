@@ -4,6 +4,7 @@ import kv.polyanskiy.realworld.services.UserCredentialService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -31,6 +32,8 @@ public class SecurityConfig {
         .csrf().disable()
         .authorizeRequests()
         .antMatchers("/api/users/**")
+        .permitAll()
+        .mvcMatchers(HttpMethod.GET, "/api/profiles/**")
         .permitAll()
         .anyRequest().authenticated()
         .and()
