@@ -43,6 +43,6 @@ public class User {
   private String image;
 
   @OneToMany(fetch = FetchType.EAGER)
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "user_id", referencedColumnName = "id")
   private Set<Following> following;
 }
